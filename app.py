@@ -13,7 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 load_dotenv()
 
 #Database URI from render DONT FORGER postgresql+asyncpg://
-DATABASE_URL = f'postgresql+asyncpg://course_python_db_f9pf_user:szSDy5PGP8h1vIefYlzol7CU1ottnpJ8@dpg-csoafaogph6c73boprk0-a.oregon-postgres.render.com/course_python_db_f9pf'
+DATABASE_URL = f'postgresql+asyncpg://course_python_db_j3cw_user:7GABbtFwK0PbzdiEwdMEoD5OpNU6kNB7@dpg-csob3pdumphs738bgd70-a.frankfurt-postgres.render.com/course_python_db_j3cw'
 
 # Initialize async SQLAlchemy
 engine = create_async_engine(DATABASE_URL, echo=True)
