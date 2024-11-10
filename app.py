@@ -90,4 +90,53 @@ async def get_item(item_id: int, db: AsyncSession = Depends(get_db)):
     if item is None:
         raise HTTPException(status_code=404, detail="Item not found")
     return item
+
+
+ 
+# POST: Create a new item
+@app.post("/items", response_model=Item)
+async def create_item(item: Item, db: AsyncSession = Depends(get_db)):
+    db_item = ItemDB(**item.model_dump(exclude_unset=True))
+    db.add(db_item)
+    await db.commit()
+    await db.refresh(db_item)
+    return db_item
+ 
+@app.put("/items/{item_id}", response_model=Item)
+async def update_item(item_id: int, updated_item: Item, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(ItemDB).filter(ItemDB.id == item_id))
+    db_item = result.scalar_one_or_none()
+    if db_item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+ 
+    for key, value in updated_item.model_dump(exclude_unset=True).items():
+        setattr(db_item, key, value)
+    await db.commit()
+    await db.refresh(db_item)
+    return db_item
+ 
+@app.patch("/items/{item_id}", response_model=Item)
+async def patch_item(item_id: int, item_data: ItemUpdate, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(ItemDB).filter(ItemDB.id == item_id))
+    db_item = result.scalar_one_or_none()
+    if db_item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+ 
+    for key, value in item_data.model_dump(exclude_unset=True).items():
+        setattr(db_item, key, value)
+    await db.commit()
+    await db.refresh(db_item)
+    return db_item
+ 
+# DELETE: Delete an item by ID
+@app.delete("/items/{item_id}")
+async def delete_item(item_id: int, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(ItemDB).filter(ItemDB.id == item_id))
+    db_item = result.scalar_one_or_none()
+    if db_item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+   
+    await db.delete(db_item)
+    await db.commit()
+    return {"detail": f"Item {item_id} deleted"}
  
