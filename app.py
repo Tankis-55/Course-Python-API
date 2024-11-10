@@ -13,7 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 load_dotenv()
 
 #Database URI from render DONT FORGER postgresql+asyncpg://
-DATABASE_URL = f''
+DATABASE_URL = f'postgresql+asyncpg://course_python_db_f9pf_user:szSDy5PGP8h1vIefYlzol7CU1ottnpJ8@dpg-csoafaogph6c73boprk0-a.oregon-postgres.render.com/course_python_db_f9pf'
 
 
 
