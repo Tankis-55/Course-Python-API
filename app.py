@@ -1,12 +1,13 @@
 import os
 from dotenv import load_dotenv  # Import load_dotenv
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Request
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy import Column, Integer, String, Float, Boolean, select
 from typing import List, Optional
 from fastapi.middleware.cors import CORSMiddleware
+
  
 
 #Load enviroment from variables from .env file
