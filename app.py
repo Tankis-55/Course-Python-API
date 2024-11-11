@@ -8,14 +8,12 @@ from sqlalchemy import Column, Integer, String, Float, Boolean, select
 from typing import List, Optional
 from fastapi.middleware.cors import CORSMiddleware
 
-# Load environment variables from .env file
+#Load enviroment from variables from .env file
 load_dotenv()
 
-# Securely load the database URL
-DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL is not set in the environment")
-    
+#Database URI from render DONT FORGER postgresql+asyncpg://
+DATABASE_URL = f'postgresql+asyncpg://course_python_db_j3cw_user:7GABbtFwK0PbzdiEwdMEoD5OpNU6kNB7@dpg-csob3pdumphs738bgd70-a.frankfurt-postgres.render.com/course_python_db_j3cw'
+
 # Initialize async SQLAlchemy
 engine = create_async_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine, class_=AsyncSession)
